@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mundial 2026 · Grupo J · Matemática 2°</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --celeste: #74ACDF;
+    --azul: #003DA5;
+    --blanco: #FFFFFF;
+    --oro: #F0C040;
+    --verde-campo: #2D6A2D;
+    --verde-claro: #3A8A3A;
+    --gris-dark: #111827;
+    --gris-med: #1F2937;
+    --gris-panel: #1a2535;
+    --gris-border: #2e3d52;
+    --rojo: #E63946;
+    --texto: #e8eaf0;
+    --texto-dim: #8a9bb5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--gris-dark);
+    color: var(--texto);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ══════════════════════ HEADER ══════════════════════ */
+  .header {
+    background: linear-gradient(135deg, var(--azul) 0%, #001f6b 60%, #000c2e 100%);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 6px,
+      rgba(255,255,255,.03) 6px,
+      rgba(255,255,255,.03) 7px
+    );
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 28px;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+  .escudo-arg {
+    width: 72px;
+    height: 72px;
+    background: radial-gradient(circle at 40% 35%, var(--celeste), var(--azul));
+    border-radius: 50%;
+    border: 3px solid var(--celeste);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    box-shadow: 0 0 24px rgba(116,172,223,.5);
+    flex-shrink: 0;
+  }
+  .header-title { text-align: center; }
+  .header-pre {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--celeste);
+    margin-bottom: 4px;
+  }
+  .header-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    color: var(--blanco);
+    text-shadow: 0 2px 16px rgba(0,61,165,.6);
+  }
+  .header-main span { color: var(--celeste); }
+  .header-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    color: var(--texto-dim);
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+  .badge-grupo {
+    background: var(--oro);
+    color: #111;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(240,192,64,.4);
+  }
+  .badge-grupo small { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+
+  /* ══════════════════════ NAV TABS ══════════════════════ */
+  .tabs {
+    background: var(--gris-med);
+    border-bottom: 2px solid var(--gris-border);
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 16px;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--texto-dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all .2s;
+    position: relative;
+    top: 2px;
+  }
+  .tab-btn:hover { color: var(--celeste); }
+  .tab-btn.active {
+    color: var(--celeste);
+    border-bottom-color: var(--celeste);
+  }
+
+  /* ══════════════════════ CONTENIDO ══════════════════════ */
+  .content { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ══════════════════════ SECCIÓN DISPARADORA ══════════════════════ */
+  .pregunta-box {
+    background: linear-gradient(135deg, rgba(0,61,165,.4), rgba(116,172,223,.1));
+    border: 2px solid var(--celeste);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pregunta-box::before {
+    content: '?';
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    color: rgba(116,172,223,.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .pregunta-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--oro);
+    margin-bottom: 12px;
+  }
+  .pregunta-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(20px, 3.5vw, 32px);
+    color: var(--blanco);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .pregunta-desc { font-size: 15px; color: var(--texto-dim); line-height: 1.65; }
+
+  /* Currícula */
+  .curricula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .curricula-card {
+    background: var(--gris-panel);
+    border: 1px solid var(--gris-border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color .2s;
+  }
+  .curricula-card:hover { border-color: var(--celeste); }
+  .curricula-card.highlight { border-color: var(--oro); background: rgba(240,192,64,.06); }
+  .card-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--celeste);
+    margin-bottom: 4px;
+  }
+  .curricula-card.highlight .card-year { color: var(--oro); }
+  .card-tema { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--texto-dim); line-height: 1.55; }
+  .card-badge {
+    display: inline-block;
+    background: var(--azul);
+    color: var(--celeste);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .curricula-card.highlight .card-badge { background: var(--oro); color: #111; }
+
+  /* ══════════════════════ SECUENCIA ══════════════════════ */
+  .secuencia-paso {
+    background: var(--gris-panel);
+    border: 1px solid var(--gris-border);
+    border-left: 4px solid var(--celeste);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .secuencia-paso.momento-2 { border-left-color: var(--oro); }
+  .secuencia-paso.momento-3 { border-left-color: var(--verde-claro); }
+  .secuencia-paso.momento-4 { border-left-color: var(--rojo); }
+  .paso-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .paso-num {
+    background: var(--celeste);
+    color: var(--azul);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .secuencia-paso.momento-2 .paso-num { background: var(--oro); }
+  .secuencia-paso.momento-3 .paso-num { background: var(--verde-claro); }
+  .secuencia-paso.momento-4 .paso-num { background: var(--rojo); }
+  .paso-titulo { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: .5px; }
+  .paso-meta { font-size: 11px; color: var(--texto-dim); letter-spacing: 1px; text-transform: uppercase; }
+  .paso-body { font-size: 14px; line-height: 1.7; color: var(--texto-dim); }
+  .paso-body strong { color: var(--texto); }
+  .paso-body ul { padding-left: 18px; margin: 10px 0; }
+  .paso-body li { margin-bottom: 6px; }
+  .concepto-chip {
+    display: inline-block;
+    background: rgba(116,172,223,.15);
+    border: 1px solid rgba(116,172,223,.3);
+    color: var(--celeste);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 3px 3px 0 0;
+  }
+
+  /* ══════════════════════ FIXTURE + PLANILLA ══════════════════════ */
+  .equipos-banner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .equipo-card {
+    background: var(--gris-panel);
+    border: 1px solid var(--gris-border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: all .25s;
+    cursor: default;
+  }
+  .equipo-card:hover { border-color: var(--celeste); transform: translateY(-2px); }
+  .equipo-card.arg { border-color: var(--celeste); background: rgba(116,172,223,.08); }
+  .equipo-flag { font-size: 42px; display: block; margin-bottom: 8px; }
+  .equipo-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: .5px; }
+  .equipo-info { font-size: 11px; color: var(--texto-dim); margin-top: 4px; }
+
+  /* Partidos input */
+  .fixture-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--texto-dim);
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gris-border);
+  }
+  .fixture-section-title span { color: var(--celeste); }
+
+  .partido-card {
+    background: var(--gris-panel);
+    border: 1px solid var(--gris-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    align-items: center;
+    gap: 10px;
+    transition: border-color .2s;
+  }
+  .partido-card:hover { border-color: var(--gris-border); }
+  .partido-local { text-align: right; }
+  .partido-visitante { text-align: left; }
+  .partido-team {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: .5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .partido-local .partido-team { justify-content: flex-end; }
+  .partido-visitante .partido-team { justify-content: flex-start; }
+  .team-flag { font-size: 20px; }
+  .partido-fecha { font-size: 11px; color: var(--texto-dim); margin-top: 2px; }
+  .score-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gris-dark);
+    border: 1px solid var(--gris-border);
+    border-radius: 8px;
+    padding: 6px 10px;
+  }
+  .score-input {
+    width: 42px;
+    height: 36px;
+    background: rgba(116,172,223,.1);
+    border: 1px solid rgba(116,172,223,.3);
+    border-radius: 6px;
+    color: var(--blanco);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    text-align: center;
+    outline: none;
+    transition: border-color .2s, background .2s;
+  }
+  .score-input:focus { border-color: var(--celeste); background: rgba(116,172,223,.18); }
+  .score-sep { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--texto-dim); }
+  .partido-sede { font-size: 10px; color: var(--texto-dim); text-align: center; }
+
+  /* Botón calcular */
+  .btn-calcular {
+    display: block;
+    width: 100%;
+    background: linear-gradient(90deg, var(--azul), var(--celeste));
+    color: var(--blanco);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 24px 0;
+    transition: opacity .2s, transform .1s;
+    box-shadow: 0 4px 20px rgba(0,61,165,.4);
+  }
+  .btn-calcular:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-calcular:active { transform: translateY(0); }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--gris-border);
+    color: var(--texto-dim);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .2s;
+    margin-top: 8px;
+  }
+  .btn-secondary:hover { border-color: var(--texto-dim); color: var(--texto); }
+
+  /* ══════════════════════ TABLA POSICIONES ══════════════════════ */
+  .tabla-wrap { overflow-x: auto; margin-top: 8px; }
+  table.posiciones {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  table.posiciones thead tr {
+    background: var(--gris-med);
+    border-bottom: 2px solid var(--celeste);
+  }
+  table.posiciones th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--texto-dim);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  table.posiciones th:first-child { text-align: left; width: 40%; }
+  table.posiciones td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--gris-border);
+    transition: background .2s;
+  }
+  table.posiciones td:first-child { text-align: left; }
+  table.posiciones tr:hover td { background: rgba(116,172,223,.05); }
+  table.posiciones tr.pos-1 td { background: rgba(116,172,223,.08); }
+  table.posiciones tr.pos-2 td { background: rgba(116,172,223,.04); }
+  table.posiciones tr.pos-3 td { background: rgba(45,106,45,.06); }
+  .pos-rank { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--texto-dim); width: 28px; display: inline-block; text-align: center; }
+  .pos-rank.r1 { color: var(--oro); }
+  .pos-rank.r2 { color: var(--celeste); }
+  .pos-rank.r3 { color: var(--verde-claro); }
+  .pos-pts { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--blanco); }
+  .pos-dg { font-family: 'Bebas Neue', sans-serif; font-size: 18px; }
+  .pos-dg.pos { color: var(--verde-claro); }
+  .pos-dg.neg { color: var(--rojo); }
+  .pos-dg.zero { color: var(--texto-dim); }
+  .clasificado-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .clasificado-badge.directo { background: var(--celeste); color: var(--azul); }
+  .clasificado-badge.posible { background: rgba(45,106,45,.4); color: var(--verde-claro); border: 1px solid var(--verde-claro); }
+
+  /* Panel explicativo */
+  .explicacion-panel {
+    background: var(--gris-panel);
+    border: 1px solid var(--gris-border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 24px;
+  }
+  .explicacion-panel h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--celeste);
+    margin-bottom: 12px;
+  }
+  .formula-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    background: var(--gris-dark);
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+  .formula-label { font-size: 13px; font-weight: 600; min-width: 140px; }
+  .formula { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; color: var(--oro); font-weight: 700; }
+  .formula-desc { font-size: 12px; color: var(--texto-dim); flex: 1; }
+
+  /* ══════════════════════ FICHA DE TRABAJO ══════════════════════ */
+  .ficha {
+    background: var(--blanco);
+    color: #111;
+    border-radius: 12px;
+    padding: 36px;
+    margin-bottom: 20px;
+    print-color-adjust: exact;
+  }
+  .ficha-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 3px solid var(--azul);
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+  }
+  .ficha-escuela { flex: 1; }
+  .ficha-escuela h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--azul); }
+  .ficha-escuela p { font-size: 12px; color: #555; margin-top: 2px; }
+  .ficha-datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .ficha-campo {
+    border-bottom: 1px solid #bbb;
+    padding: 4px 0;
+    font-size: 12px;
+    color: #444;
+  }
+  .ficha-campo span { font-weight: 700; color: var(--azul); }
+  .ficha-section { margin-bottom: 20px; }
+  .ficha-section h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--azul);
+    border-left: 4px solid var(--celeste);
+    padding-left: 8px;
+    margin-bottom: 10px;
+  }
+  .ficha-section p, .ficha-section li { font-size: 13px; line-height: 1.7; color: #333; }
+  .ficha-section ul { padding-left: 18px; }
+  .ficha-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+  .ficha-table th { background: var(--azul); color: #fff; padding: 7px 8px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .5px; }
+  .ficha-table td { border: 1px solid #ddd; padding: 6px 8px; text-align: center; }
+  .ficha-table tr:nth-child(even) td { background: #f5f7ff; }
+  .dotted-line { border-top: 1px dashed #bbb; margin: 8px 0; height: 22px; }
+
+  /* Print */
+  @media print {
+    .tabs, .header, .btn-calcular, .btn-secondary { display: none !important; }
+    .ficha { box-shadow: none; }
+    body { background: white; }
+    .content { padding: 0; }
+  }
+
+  /* ══════════════════════ RESPONSIVE ══════════════════════ */
+  @media (max-width: 640px) {
+    .header-inner { grid-template-columns: auto 1fr; }
+    .badge-grupo { display: none; }
+    .equipos-banner { grid-template-columns: repeat(2, 1fr); }
+    .partido-card { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; }
+    .partido-sede { display: none; }
+    .curricula-grid { grid-template-columns: 1fr; }
+    .ficha-datos { grid-template-columns: 1fr 1fr; }
+    .ficha { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="escudo-arg">🇦🇷</div>
+    <div class="header-title">
+      <div class="header-pre">Matemática · 2° Año · Feria de Ciencias 2026</div>
+      <div class="header-main">MUNDIAL <span>2026</span></div>
+      <div class="header-sub">Números Enteros · Diferencia de Goles · Tabla de Posiciones</div>
+    </div>
+    <div class="badge-grupo">
+      <small>GRUPO</small>
+      J
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('disparadora')">🎯 Pregunta Disparadora</button>
+  <button class="tab-btn" onclick="showTab('secuencia')">📋 Secuencia Didáctica</button>
+  <button class="tab-btn" onclick="showTab('planilla')">⚽ Fixture + Planilla</button>
+  <button class="tab-btn" onclick="showTab('ficha')">📄 Ficha de Trabajo</button>
+</div>
+
+<div class="content">
+
+  <!-- ═══════════ TAB 1: DISPARADORA ═══════════ -->
+  <div class="tab-panel active" id="tab-disparadora">
+
+    <div class="pregunta-box">
+      <div class="pregunta-tag">🌍 Pregunta Disparadora · Feria de Ciencias 2026</div>
+      <div class="pregunta-text">¿Cómo se gana un Mundial de fútbol?</div>
+      <div class="pregunta-desc">
+        Ganar un mundial no es solo cuestión de talento: detrás de cada clasificación hay <strong>matemática pura</strong>. En el Mundial 2026, 48 selecciones deben acumular puntos, cuidar su diferencia de goles y superar adversidades numéricas para avanzar. Pero... ¿alcanza con ganar todos los partidos? ¿Puede un equipo clasificar con <em>diferencia de goles negativa</em>? ¿Qué combinación de resultados necesita Argentina para terminar primero en su grupo? La respuesta no está solo en la cancha: está en los <strong>números enteros</strong>.
+      </div>
+    </div>
+
+    <h2 style="font-family:'Barlow Condensed';font-size:20px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--texto-dim);margin-bottom:16px;border-bottom:1px solid var(--gris-border);padding-bottom:8px;">
+      🎓 Conexión con la Currícula — 1° a 6° Año
+    </h2>
+
+    <div class="curricula-grid">
+      <div class="curricula-card">
+        <div class="card-year">1° Año</div>
+        <div class="card-tema">Números Naturales y Operaciones</div>
+        <div class="card-desc">Suma de goles anotados por partido. Contar cuántos goles hizo cada equipo a lo largo del mundial. Ordenar equipos de mayor a menor cantidad de goles.</div>
+        <span class="card-badge">Numeración · Aritmética</span>
+      </div>
+      <div class="curricula-card highlight">
+        <div class="card-year">2° Año ⭐</div>
+        <div class="card-tema">Números Enteros · Diferencia de Goles</div>
+        <div class="card-desc">Calcular diferencia de goles (puede ser negativa). Sumar puntos según resultados (3, 1 o 0). Ordenar una tabla de posiciones usando enteros positivos y negativos.</div>
+        <span class="card-badge">Foco de esta secuencia</span>
+      </div>
+      <div class="curricula-card">
+        <div class="card-year">3° Año</div>
+        <div class="card-tema">Números Racionales y Proporcionalidad</div>
+        <div class="card-desc">Eficacia goleadora: razón entre goles anotados y partidos jugados. Porcentaje de victorias. Comparación de estadísticas entre selecciones.</div>
+        <span class="card-badge">Fracciones · Porcentajes</span>
+      </div>
+      <div class="curricula-card">
+        <div class="card-year">4° Año</div>
+        <div class="card-tema">Estadística Descriptiva</div>
+        <div class="card-desc">Promedio de goles por partido de todo el mundial. Mediana y moda en distribución de resultados. Gráficos de barras y tortas con datos del torneo.</div>
+        <span class="card-badge">Estadística</span>
+      </div>
+      <div class="curricula-card">
+        <div class="card-year">5° Año</div>
+        <div class="card-tema">Probabilidad y Combinatoria</div>
+        <div class="card-desc">Probabilidad de que un equipo clasifique según escenarios posibles de resultados. Cantidad de combinaciones posibles en la fase eliminatoria.</div>
+        <span class="card-badge">Probabilidad</span>
+      </div>
+      <div class="curricula-card">
+        <div class="card-year">6° Año</div>
+        <div class="card-tema">Funciones y Análisis de Datos</div>
+        <div class="card-desc">Modelización de la evolución del ranking FIFA. Regresión lineal entre inversión en fútbol y posición en el mundial. Análisis de tendencias históricas.</div>
+        <span class="card-badge">Funciones · Álgebra</span>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;background:var(--gris-panel);border:1px solid var(--gris-border);border-radius:12px;padding:22px;">
+      <h3 style="font-family:'Barlow Condensed';font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--oro);margin-bottom:12px;">🌐 Conexión Interdisciplinaria</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;font-size:13px;color:var(--texto-dim);">
+        <div>🗺️ <strong style="color:var(--texto)">Geografía:</strong> ubicar los países participantes y las sedes del mundial en el mapa.</div>
+        <div>🏛️ <strong style="color:var(--texto)">Ciencias Sociales:</strong> historia de los mundiales, economía del fútbol.</div>
+        <div>🏃 <strong style="color:var(--texto)">Ed. Física:</strong> reglas del fútbol, sistemas tácticos y su relación con la estrategia.</div>
+        <div>💻 <strong style="color:var(--texto)">Informática:</strong> diseño de la planilla de cálculo automatizada.</div>
+        <div>📊 <strong style="color:var(--texto)">Tecnología:</strong> cómo funciona el VAR y la tecnología de línea de gol.</div>
+        <div>📖 <strong style="color:var(--texto)">Lengua:</strong> redacción del informe final de la feria.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SECUENCIA ═══════════ -->
+  <div class="tab-panel" id="tab-secuencia">
+
+    <div style="background:rgba(116,172,223,.07);border:1px solid rgba(116,172,223,.2);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:1.65;">
+      <strong style="color:var(--celeste)">Datos de la propuesta:</strong> Año: 2° · Eje: Números y Operaciones · 
+      Contenido: Números Enteros · Duración estimada: <strong>4–5 clases de 80 min</strong> · 
+      Institución: IPET Nº 314
+    </div>
+
+    <div class="secuencia-paso">
+      <div class="paso-header">
+        <div class="paso-num">1</div>
+        <div>
+          <div class="paso-titulo">Clase 1 — Activación: ¿Qué es la diferencia de goles?</div>
+          <div class="paso-meta">Momento de exploración · 80 min</div>
+        </div>
+      </div>
+      <div class="paso-body">
+        <strong>Disparador (15 min):</strong> Mostrar la tabla de posiciones real de un grupo del Mundial Qatar 2022. Preguntar: "¿Por qué dos equipos con los mismos puntos están en diferente posición?"<br><br>
+        <strong>Desarrollo (45 min):</strong>
+        <ul>
+          <li>Presentar la situación: en un partido con resultado <strong>Argentina 3 – Arabia Saudita 2</strong>, ¿cuántos goles hizo cada equipo? ¿Cuál es la diferencia para Argentina? ¿Para Arabia?</li>
+          <li>Introducir el concepto de <strong>número entero negativo</strong> como diferencia de goles desfavorable.</li>
+          <li>Mostrar la recta numérica y ubicar diferencias de goles: +3, +1, 0, −1, −3.</li>
+          <li>Trabajar con ejemplos: si un equipo hizo 2 goles y recibió 5, ¿cuál es su diferencia? (<em>2 − 5 = −3</em>)</li>
+        </ul>
+        <strong>Cierre (20 min):</strong> Puesta en común. ¿Cuándo la diferencia es positiva? ¿Negativa? ¿Cero?<br><br>
+        <span class="concepto-chip">Enteros positivos y negativos</span>
+        <span class="concepto-chip">Recta numérica</span>
+        <span class="concepto-chip">Resta en Z</span>
+      </div>
+    </div>
+
+    <div class="secuencia-paso momento-2">
+      <div class="paso-header">
+        <div class="paso-num">2</div>
+        <div>
+          <div class="paso-titulo">Clase 2 — Construcción: El sistema de puntos FIFA</div>
+          <div class="paso-meta">Momento de construcción conceptual · 80 min</div>
+        </div>
+      </div>
+      <div class="paso-body">
+        <strong>Introducción (10 min):</strong> "En el fútbol, ganar da 3 puntos, empatar 1 punto, perder 0 puntos. ¿Cómo funciona esto matemáticamente?"<br><br>
+        <strong>Desarrollo (50 min):</strong>
+        <ul>
+          <li>Trabajar con el <strong>Grupo J del Mundial 2026</strong>: Argentina, Argelia, Austria, Jordania.</li>
+          <li>Simular 3 partidos ficticios y completar manualmente una tabla de posiciones.</li>
+          <li>Sumar diferencias de gol partido a partido usando <strong>suma de enteros</strong>. Ejemplo: si en el partido 1 la DG fue +2 y en el partido 2 fue −1, la DG acumulada es +2 + (−1) = +1.</li>
+          <li>Ordenar la tabla: primero por puntos, luego por DG, luego por GF.</li>
+        </ul>
+        <strong>Reflexión (20 min):</strong> ¿Es posible clasificar con diferencia de goles negativa? ¿Qué estrategia debería usar un equipo con −2 en su último partido?<br><br>
+        <span class="concepto-chip">Suma de enteros</span>
+        <span class="concepto-chip">Orden en Z</span>
+        <span class="concepto-chip">Criterios de desempate</span>
+      </div>
+    </div>
+
+    <div class="secuencia-paso momento-3">
+      <div class="paso-header">
+        <div class="paso-num">3</div>
+        <div>
+          <div class="paso-titulo">Clases 3 y 4 — Aplicación: Completar el fixture real del Grupo J</div>
+          <div class="paso-meta">Trabajo grupal + digital · 160 min (2 clases)</div>
+        </div>
+      </div>
+      <div class="paso-body">
+        <strong>Consigna central:</strong> Cada grupo (3–4 alumnos) recibe la <strong>ficha de trabajo impresa</strong> con el fixture real del Grupo J. Deben:<br><br>
+        <ul>
+          <li><strong>Jornada 1 (pre-mundial):</strong> Predecir los resultados de los 6 partidos e ingresar los marcadores que creen que ocurrirán. Calcular manualmente puntos, goles a favor, goles en contra y diferencia de goles.</li>
+          <li><strong>Jornada 2 (durante/post-mundial):</strong> Completar con los resultados <em>reales</em> y comparar con sus predicciones. ¿En qué se equivocaron? ¿Qué cambió en la tabla?</li>
+          <li>Verificar sus cálculos usando <strong>la planilla digital</strong> de la pestaña "Fixture + Planilla".</li>
+          <li>Identificar: ¿cuáles son los números negativos en la tabla? ¿Qué significan?</li>
+        </ul>
+        <strong>Para pensar:</strong> Si Argentina empata 1–1 con Argelia y pierde 0–1 con Austria, ¿puede clasificar en el partido final contra Jordania? ¿Qué resultado necesita y cuánto le quedaría de DG?<br><br>
+        <span class="concepto-chip">Aplicación práctica</span>
+        <span class="concepto-chip">Suma y resta de enteros</span>
+        <span class="concepto-chip">Comparación y orden</span>
+        <span class="concepto-chip">Resolución de problemas</span>
+      </div>
+    </div>
+
+    <div class="secuencia-paso momento-4">
+      <div class="paso-header">
+        <div class="paso-num">4</div>
+        <div>
+          <div class="paso-titulo">Clase 5 — Cierre: Exposición en la Feria de Ciencias</div>
+          <div class="paso-meta">Puesta en común y evaluación · 80 min</div>
+        </div>
+      </div>
+      <div class="paso-body">
+        <strong>Producto final de cada grupo:</strong>
+        <ul>
+          <li>Tabla de posiciones del Grupo J completa y correctamente calculada.</li>
+          <li>Una <strong>conclusión escrita</strong>: "¿Clasificó Argentina? ¿Con cuántos puntos? ¿Cuál fue su diferencia de goles final?"</li>
+          <li>Respuesta a la pregunta disparadora: "¿Cómo se usan los números enteros en el fútbol?"</li>
+          <li><strong>Extensión:</strong> Comparar la diferencia de goles del Grupo J con la de otro grupo. ¿Qué grupo tuvo más goles? ¿Cuál tuvo la mayor diferencia individual?</li>
+        </ul>
+        <strong>Criterios de evaluación:</strong>
+        <ul>
+          <li>✅ Aplica correctamente la resta de enteros (goles a favor − goles en contra).</li>
+          <li>✅ Suma puntos según el resultado de cada partido.</li>
+          <li>✅ Ordena correctamente la tabla de posiciones con enteros positivos y negativos.</li>
+          <li>✅ Comunica en forma oral los resultados y el significado de los números.</li>
+        </ul>
+        <span class="concepto-chip">Evaluación</span>
+        <span class="concepto-chip">Comunicación matemática</span>
+        <span class="concepto-chip">Feria de Ciencias</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ TAB 3: PLANILLA ═══════════ -->
+  <div class="tab-panel" id="tab-planilla">
+
+    <div class="equipos-banner">
+      <div class="equipo-card arg">
+        <span class="equipo-flag">🇦🇷</span>
+        <div class="equipo-nombre">Argentina</div>
+        <div class="equipo-info">Campeón 2022 · Cabeza de serie</div>
+      </div>
+      <div class="equipo-card">
+        <span class="equipo-flag">🇩🇿</span>
+        <div class="equipo-nombre">Argelia</div>
+        <div class="equipo-info">CAF · Pot 2</div>
+      </div>
+      <div class="equipo-card">
+        <span class="equipo-flag">🇦🇹</span>
+        <div class="equipo-nombre">Austria</div>
+        <div class="equipo-info">UEFA · Pot 3</div>
+      </div>
+      <div class="equipo-card">
+        <span class="equipo-flag">🇯🇴</span>
+        <div class="equipo-nombre">Jordania</div>
+        <div class="equipo-info">AFC · Pot 4</div>
+      </div>
+    </div>
+
+    <div class="fixture-section-title">⚽ Jornada 1 — <span>16 de junio de 2026</span></div>
+
+    <div class="partido-card" id="p1">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇦🇷</span> Argentina</div>
+        <div class="partido-fecha">Mar 16/06 · Arrowhead, Kansas City</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p1h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p1a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 1</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇩🇿</span> Argelia</div>
+        <div class="partido-fecha">vs Argentina</div>
+      </div>
+    </div>
+
+    <div class="partido-card" id="p2">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇦🇹</span> Austria</div>
+        <div class="partido-fecha">Mar 16/06 · Levi's, San Francisco</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p2h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p2a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 2</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇯🇴</span> Jordania</div>
+        <div class="partido-fecha">vs Austria</div>
+      </div>
+    </div>
+
+    <div class="fixture-section-title">⚽ Jornada 2 — <span>22 de junio de 2026</span></div>
+
+    <div class="partido-card" id="p3">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇦🇷</span> Argentina</div>
+        <div class="partido-fecha">Lun 22/06 · AT&T, Dallas</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p3h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p3a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 3</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇦🇹</span> Austria</div>
+        <div class="partido-fecha">vs Argentina</div>
+      </div>
+    </div>
+
+    <div class="partido-card" id="p4">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇯🇴</span> Jordania</div>
+        <div class="partido-fecha">Lun 22/06 · Levi's, San Francisco</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p4h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p4a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 4</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇩🇿</span> Argelia</div>
+        <div class="partido-fecha">vs Jordania</div>
+      </div>
+    </div>
+
+    <div class="fixture-section-title">⚽ Jornada 3 — <span>27 de junio de 2026</span></div>
+
+    <div class="partido-card" id="p5">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇯🇴</span> Jordania</div>
+        <div class="partido-fecha">Sáb 27/06 · AT&T, Dallas</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p5h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p5a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 5</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇦🇷</span> Argentina</div>
+        <div class="partido-fecha">vs Jordania</div>
+      </div>
+    </div>
+
+    <div class="partido-card" id="p6">
+      <div class="partido-local">
+        <div class="partido-team"><span class="team-flag">🇩🇿</span> Argelia</div>
+        <div class="partido-fecha">Sáb 27/06 · Arrowhead, Kansas City</div>
+      </div>
+      <div class="score-box">
+        <input class="score-input" type="number" min="0" max="30" id="p6h" placeholder="0" oninput="calcular()">
+        <span class="score-sep">–</span>
+        <input class="score-input" type="number" min="0" max="30" id="p6a" placeholder="0" oninput="calcular()">
+      </div>
+      <div class="partido-sede">Sede 6</div>
+      <div class="score-box" style="visibility:hidden;pointer-events:none">
+        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+      </div>
+      <div class="partido-visitante">
+        <div class="partido-team"><span class="team-flag">🇦🇹</span> Austria</div>
+        <div class="partido-fecha">vs Argelia</div>
+      </div>
+    </div>
+
+    <button class="btn-calcular" onclick="calcular()">⚽ CALCULAR TABLA DE POSICIONES</button>
+    <button class="btn-secondary" onclick="resetear()">↺ Borrar marcadores</button>
+
+    <!-- TABLA -->
+    <div class="fixture-section-title" style="margin-top:28px">📊 Tabla de Posiciones — <span>Grupo J</span></div>
+    <div class="tabla-wrap">
+      <table class="posiciones" id="tabla-pos">
+        <thead>
+          <tr>
+            <th>Selección</th>
+            <th>PJ</th>
+            <th>G</th>
+            <th>E</th>
+            <th>P</th>
+            <th>GF</th>
+            <th>GC</th>
+            <th>DG</th>
+            <th>PTS</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          <tr>
+            <td colspan="9" style="text-align:center;color:var(--texto-dim);padding:24px;font-size:13px;">
+              Ingresá los marcadores de los partidos y presioná <strong>"Calcular"</strong> para ver la tabla.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Panel explicativo -->
+    <div class="explicacion-panel">
+      <h3>📐 Fórmulas aplicadas (Números Enteros)</h3>
+      <div class="formula-row">
+        <span class="formula-label">Diferencia de Goles</span>
+        <span class="formula">DG = GF − GC</span>
+        <span class="formula-desc">GF = Goles a Favor · GC = Goles en Contra. Puede ser positiva, negativa o cero (número entero).</span>
+      </div>
+      <div class="formula-row">
+        <span class="formula-label">Puntos por partido</span>
+        <span class="formula">Victoria → 3 pts · Empate → 1 pt · Derrota → 0 pts</span>
+        <span class="formula-desc">Se suman los puntos de cada partido para obtener el total.</span>
+      </div>
+      <div class="formula-row">
+        <span class="formula-label">Criterio de clasificación</span>
+        <span class="formula">1° PTS · 2° DG · 3° GF · 4° Partido directo</span>
+        <span class="formula-desc">Si dos equipos tienen los mismos puntos, se desempata por diferencia de goles (número entero mayor).</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 4: FICHA ═══════════ -->
+  <div class="tab-panel" id="tab-ficha">
+    <div style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-secondary" onclick="window.print()">🖨️ Imprimir ficha</button>
+    </div>
+
+    <div class="ficha">
+      <div class="ficha-header">
+        <div class="ficha-escuela">
+          <h2>IPET Nº 314</h2>
+          <p>Área: Matemática · Curso: 2° Año · Unidad: Números Enteros</p>
+        </div>
+        <div style="text-align:right;font-size:12px;color:#555;">
+          <div style="font-family:'Bebas Neue';font-size:20px;color:var(--azul)">MUNDIAL 2026</div>
+          <div>Grupo J – Argentina</div>
+        </div>
+      </div>
+
+      <div class="ficha-datos">
+        <div class="ficha-campo"><span>Alumno/a:</span> ________________________</div>
+        <div class="ficha-campo"><span>Fecha:</span> ___________________</div>
+        <div class="ficha-campo"><span>Grupo/Equipo:</span> _____________</div>
+      </div>
+
+      <div class="ficha-section">
+        <h3>🎯 Pregunta Disparadora</h3>
+        <p>Ganar un Mundial requiere mucho más que talento futbolístico: exige <strong>estrategia numérica</strong>. Los equipos deben sumar puntos, controlar su diferencia de goles y calcular qué resultados necesitan para avanzar. Los <strong>números enteros</strong> (positivos, negativos y cero) son los protagonistas de esa batalla matemática en la tabla de posiciones.</p>
+      </div>
+
+      <div class="ficha-section">
+        <h3>📋 Parte 1 — Recordá las fórmulas</h3>
+        <p>Completá:</p>
+        <ul>
+          <li>Si un equipo hizo 3 goles y recibió 5, su diferencia de goles es: _____ − _____ = _____</li>
+          <li>¿Es un número positivo o negativo? _______</li>
+          <li>¿Qué significa que la DG sea negativa? ___________________________________</li>
+          <li>Puntos por victoria: _____ · Empate: _____ · Derrota: _____</li>
+        </ul>
+      </div>
+
+      <div class="ficha-section">
+        <h3>⚽ Parte 2 — Fixture Real del Grupo J</h3>
+        <p style="margin-bottom:8px">Completá los marcadores (usá los resultados reales del mundial o los que predecís) y calculá los puntos y diferencia de goles de cada partido:</p>
+
+        <table class="ficha-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Local</th>
+              <th>Goles Local</th>
+              <th>Goles Visitante</th>
+              <th>Visitante</th>
+              <th>Puntos Local</th>
+              <th>Puntos Visit.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>16/06</td>
+              <td>🇦🇷 Argentina</td>
+              <td></td><td></td>
+              <td>🇩🇿 Argelia</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>16/06</td>
+              <td>🇦🇹 Austria</td>
+              <td></td><td></td>
+              <td>🇯🇴 Jordania</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>22/06</td>
+              <td>🇦🇷 Argentina</td>
+              <td></td><td></td>
+              <td>🇦🇹 Austria</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>22/06</td>
+              <td>🇯🇴 Jordania</td>
+              <td></td><td></td>
+              <td>🇩🇿 Argelia</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>27/06</td>
+              <td>🇯🇴 Jordania</td>
+              <td></td><td></td>
+              <td>🇦🇷 Argentina</td>
+              <td></td><td></td>
+            </tr>
+            <tr>
+              <td>27/06</td>
+              <td>🇩🇿 Argelia</td>
+              <td></td><td></td>
+              <td>🇦🇹 Austria</td>
+              <td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ficha-section">
+        <h3>📊 Parte 3 — Tabla de Posiciones</h3>
+        <p style="margin-bottom:8px">Calculá los totales para cada selección y completá la tabla. Recordá: DG = GF − GC (puede ser negativo).</p>
+        <table class="ficha-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Selección</th>
+              <th>PJ</th>
+              <th>G</th>
+              <th>E</th>
+              <th>P</th>
+              <th>GF</th>
+              <th>GC</th>
+              <th>DG</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1°</td><td></td><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2°</td><td></td><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>3°</td><td></td><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>4°</td><td></td><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ficha-section">
+        <h3>🧮 Parte 4 — Problemas de Aplicación</h3>
+        <ul>
+          <li style="margin-bottom:12px"><strong>a)</strong> Si Argentina tiene +4 de DG acumulada tras 2 partidos y en el tercer partido pierde 0–2, ¿cuál es su DG final?<br>
+          Operación: _____ + ( _____ ) = _____ &nbsp;&nbsp;&nbsp; ¿Positiva o negativa? _______</li>
+          <li style="margin-bottom:12px"><strong>b)</strong> Argelia tiene 4 puntos y Austria tiene 4 puntos. Argelia tiene DG = +1 y Austria tiene DG = −1. ¿Quién clasifica primero? ¿Por qué?<br>
+          <div class="dotted-line"></div></li>
+          <li><strong>c)</strong> ¿Qué resultado necesita Argentina en el último partido para asegurarse el 1° puesto si tiene los mismos puntos que Argelia pero menor DG?<br>
+          <div class="dotted-line"></div>
+          <div class="dotted-line"></div></li>
+        </ul>
+      </div>
+
+      <div class="ficha-section">
+        <h3>✍️ Parte 5 — Conclusión</h3>
+        <p>¿Cómo se usan los números enteros en el fútbol? Escribí al menos 3 oraciones explicando lo que aprendiste:</p>
+        <div class="dotted-line"></div>
+        <div class="dotted-line"></div>
+        <div class="dotted-line"></div>
+        <div class="dotted-line"></div>
+      </div>
+
+      <div style="border-top:2px solid var(--azul);margin-top:20px;padding-top:12px;display:flex;justify-content:space-between;font-size:11px;color:#666;">
+        <span>Matemática 2° · Números Enteros · Mundial 2026</span>
+        <span>IPET Nº 314</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const EQUIPOS = [
+  { id: 'ARG', nombre: 'Argentina', flag: '🇦🇷' },
+  { id: 'ALG', nombre: 'Argelia',   flag: '🇩🇿' },
+  { id: 'AUT', nombre: 'Austria',   flag: '🇦🇹' },
+  { id: 'JOR', nombre: 'Jordania',  flag: '🇯🇴' },
+];
+
+// partido[i] = [local, visitante]
+const PARTIDOS = [
+  ['ARG','ALG'], // p1
+  ['AUT','JOR'], // p2
+  ['ARG','AUT'], // p3
+  ['JOR','ALG'], // p4
+  ['JOR','ARG'], // p5
+  ['ALG','AUT'], // p6
+];
+
+function getVal(id) {
+  const v = document.getElementById(id).value;
+  return v === '' ? null : parseInt(v, 10);
+}
+
+function calcular() {
+  const stats = {};
+  EQUIPOS.forEach(e => {
+    stats[e.id] = { gf:0, gc:0, g:0, emp:0, p:0, pj:0, pts:0 };
+  });
+
+  PARTIDOS.forEach((par, i) => {
+    const gh = getVal('p'+(i+1)+'h');
+    const ga = getVal('p'+(i+1)+'a');
+    if (gh === null || ga === null) return;
+    const [loc, vis] = par;
+    stats[loc].gf += gh; stats[loc].gc += ga; stats[loc].pj++;
+    stats[vis].gf += ga; stats[vis].gc += gh; stats[vis].pj++;
+    if (gh > ga) { stats[loc].g++; stats[loc].pts += 3; stats[vis].p++; }
+    else if (gh < ga) { stats[vis].g++; stats[vis].pts += 3; stats[loc].p++; }
+    else { stats[loc].emp++; stats[loc].pts++; stats[vis].emp++; stats[vis].pts++; }
+  });
+
+  const rows = EQUIPOS.map(e => ({ ...e, ...stats[e.id], dg: stats[e.id].gf - stats[e.id].gc }));
+  rows.sort((a,b) => b.pts - a.pts || b.dg - a.dg || b.gf - a.gf);
+
+  const body = document.getElementById('tabla-body');
+  body.innerHTML = '';
+  rows.forEach((r, idx) => {
+    const posClass = ['pos-1','pos-2','pos-3',''][idx];
+    const rankClass = ['r1','r2','r3',''][idx];
+    const dgClass = r.dg > 0 ? 'pos' : r.dg < 0 ? 'neg' : 'zero';
+    const dgStr = r.dg > 0 ? '+' + r.dg : String(r.dg);
+    let badge = '';
+    if (idx === 0) badge = '<span class="clasificado-badge directo">CLASIFICA</span>';
+    if (idx === 1) badge = '<span class="clasificado-badge directo">CLASIFICA</span>';
+    if (idx === 2) badge = '<span class="clasificado-badge posible">posible 3°</span>';
+    const tr = document.createElement('tr');
+    tr.className = posClass;
+    tr.innerHTML = `
+      <td><span class="pos-rank ${rankClass}">${idx+1}</span> ${r.flag} ${r.nombre}${badge}</td>
+      <td>${r.pj}</td>
+      <td>${r.g}</td>
+      <td>${r.emp}</td>
+      <td>${r.p}</td>
+      <td>${r.gf}</td>
+      <td>${r.gc}</td>
+      <td class="pos-dg ${dgClass}">${r.pj > 0 ? dgStr : '—'}</td>
+      <td><span class="pos-pts">${r.pts}</span></td>
+    `;
+    body.appendChild(tr);
+  });
+}
+
+function resetear() {
+  for (let i=1;i<=6;i++) {
+    document.getElementById('p'+i+'h').value = '';
+    document.getElementById('p'+i+'a').value = '';
+  }
+  document.getElementById('tabla-body').innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--texto-dim);padding:24px;font-size:13px;">Ingresá los marcadores de los partidos y presioná <strong>"Calcular"</strong> para ver la tabla.</td></tr>`;
+}
+
+// Calcular en tiempo real al escribir
+document.querySelectorAll('.score-input').forEach(inp => {
+  inp.addEventListener('input', calcular);
+});
+</script>
+</body>
+</html>
