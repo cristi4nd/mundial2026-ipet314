@@ -322,12 +322,12 @@
     padding: 14px 18px;
     margin-bottom: 10px;
     display: grid;
-    grid-template-columns: 1fr auto auto auto 1fr;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     transition: border-color .2s;
   }
-  .partido-card:hover { border-color: var(--gris-border); }
+  .partido-card:hover { border-color: var(--celeste); }
   .partido-local { text-align: right; }
   .partido-visitante { text-align: left; }
   .partido-team {
@@ -557,8 +557,8 @@
     .header-inner { grid-template-columns: auto 1fr; }
     .badge-grupo { display: none; }
     .equipos-banner { grid-template-columns: repeat(2, 1fr); }
-    .partido-card { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; }
-    .partido-sede { display: none; }
+    .partido-card { grid-template-columns: 1fr auto 1fr; }
+    .partido-fecha { font-size: 10px; }
     .curricula-grid { grid-template-columns: 1fr; }
     .ficha-datos { grid-template-columns: 1fr 1fr; }
     .ficha { padding: 20px; }
@@ -806,17 +806,13 @@
         <div class="partido-fecha">Mar 16/06 · Arrowhead, Kansas City</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p1h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p1h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p1a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 1</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p1a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇩🇿</span> Argelia</div>
-        <div class="partido-fecha">vs Argentina</div>
+        <div class="partido-fecha">Mar 16/06 · Arrowhead, Kansas City</div>
       </div>
     </div>
 
@@ -826,17 +822,13 @@
         <div class="partido-fecha">Mar 16/06 · Levi's, San Francisco</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p2h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p2h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p2a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 2</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p2a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇯🇴</span> Jordania</div>
-        <div class="partido-fecha">vs Austria</div>
+        <div class="partido-fecha">Mar 16/06 · Levi's, San Francisco</div>
       </div>
     </div>
 
@@ -848,17 +840,13 @@
         <div class="partido-fecha">Lun 22/06 · AT&T, Dallas</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p3h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p3h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p3a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 3</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p3a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇦🇹</span> Austria</div>
-        <div class="partido-fecha">vs Argentina</div>
+        <div class="partido-fecha">Lun 22/06 · AT&T, Dallas</div>
       </div>
     </div>
 
@@ -868,17 +856,13 @@
         <div class="partido-fecha">Lun 22/06 · Levi's, San Francisco</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p4h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p4h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p4a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 4</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p4a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇩🇿</span> Argelia</div>
-        <div class="partido-fecha">vs Jordania</div>
+        <div class="partido-fecha">Lun 22/06 · Levi's, San Francisco</div>
       </div>
     </div>
 
@@ -890,17 +874,13 @@
         <div class="partido-fecha">Sáb 27/06 · AT&T, Dallas</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p5h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p5h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p5a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 5</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p5a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇦🇷</span> Argentina</div>
-        <div class="partido-fecha">vs Jordania</div>
+        <div class="partido-fecha">Sáb 27/06 · AT&T, Dallas</div>
       </div>
     </div>
 
@@ -910,17 +890,13 @@
         <div class="partido-fecha">Sáb 27/06 · Arrowhead, Kansas City</div>
       </div>
       <div class="score-box">
-        <input class="score-input" type="number" min="0" max="30" id="p6h" placeholder="0" oninput="calcular()">
+        <input class="score-input" type="number" min="0" max="30" id="p6h" placeholder="0">
         <span class="score-sep">–</span>
-        <input class="score-input" type="number" min="0" max="30" id="p6a" placeholder="0" oninput="calcular()">
-      </div>
-      <div class="partido-sede">Sede 6</div>
-      <div class="score-box" style="visibility:hidden;pointer-events:none">
-        <span style="width:42px"></span><span class="score-sep"></span><span style="width:42px"></span>
+        <input class="score-input" type="number" min="0" max="30" id="p6a" placeholder="0">
       </div>
       <div class="partido-visitante">
         <div class="partido-team"><span class="team-flag">🇦🇹</span> Austria</div>
-        <div class="partido-fecha">vs Argelia</div>
+        <div class="partido-fecha">Sáb 27/06 · Arrowhead, Kansas City</div>
       </div>
     </div>
 
@@ -1151,7 +1127,7 @@ const EQUIPOS = [
   { id: 'JOR', nombre: 'Jordania',  flag: '🇯🇴' },
 ];
 
-// partido[i] = [local, visitante]
+// [local, visitante]
 const PARTIDOS = [
   ['ARG','ALG'], // p1
   ['AUT','JOR'], // p2
@@ -1162,8 +1138,10 @@ const PARTIDOS = [
 ];
 
 function getVal(id) {
-  const v = document.getElementById(id).value;
-  return v === '' ? null : parseInt(v, 10);
+  const el = document.getElementById(id);
+  if (!el || el.value === '') return null;
+  const v = parseInt(el.value, 10);
+  return isNaN(v) ? null : Math.max(0, v);
 }
 
 function calcular() {
@@ -1172,26 +1150,45 @@ function calcular() {
     stats[e.id] = { gf:0, gc:0, g:0, emp:0, p:0, pj:0, pts:0 };
   });
 
+  let hayDatos = false;
+
   PARTIDOS.forEach((par, i) => {
     const gh = getVal('p'+(i+1)+'h');
     const ga = getVal('p'+(i+1)+'a');
     if (gh === null || ga === null) return;
+    hayDatos = true;
     const [loc, vis] = par;
     stats[loc].gf += gh; stats[loc].gc += ga; stats[loc].pj++;
     stats[vis].gf += ga; stats[vis].gc += gh; stats[vis].pj++;
-    if (gh > ga) { stats[loc].g++; stats[loc].pts += 3; stats[vis].p++; }
-    else if (gh < ga) { stats[vis].g++; stats[vis].pts += 3; stats[loc].p++; }
-    else { stats[loc].emp++; stats[loc].pts++; stats[vis].emp++; stats[vis].pts++; }
+    if (gh > ga) {
+      stats[loc].g++; stats[loc].pts += 3; stats[vis].p++;
+    } else if (gh < ga) {
+      stats[vis].g++; stats[vis].pts += 3; stats[loc].p++;
+    } else {
+      stats[loc].emp++; stats[loc].pts++;
+      stats[vis].emp++; stats[vis].pts++;
+    }
   });
 
-  const rows = EQUIPOS.map(e => ({ ...e, ...stats[e.id], dg: stats[e.id].gf - stats[e.id].gc }));
+  const body = document.getElementById('tabla-body');
+
+  if (!hayDatos) {
+    body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--texto-dim);padding:24px;font-size:13px;">Ingresá los marcadores de los partidos y presioná <strong>"Calcular"</strong> para ver la tabla.</td></tr>';
+    return;
+  }
+
+  const rows = EQUIPOS.map(e => ({
+    ...e,
+    ...stats[e.id],
+    dg: stats[e.id].gf - stats[e.id].gc
+  }));
+
   rows.sort((a,b) => b.pts - a.pts || b.dg - a.dg || b.gf - a.gf);
 
-  const body = document.getElementById('tabla-body');
   body.innerHTML = '';
   rows.forEach((r, idx) => {
-    const posClass = ['pos-1','pos-2','pos-3',''][idx];
-    const rankClass = ['r1','r2','r3',''][idx];
+    const posClass = ['pos-1','pos-2','pos-3',''][idx] || '';
+    const rankClass = ['r1','r2','r3',''][idx] || '';
     const dgClass = r.dg > 0 ? 'pos' : r.dg < 0 ? 'neg' : 'zero';
     const dgStr = r.dg > 0 ? '+' + r.dg : String(r.dg);
     let badge = '';
@@ -1200,32 +1197,42 @@ function calcular() {
     if (idx === 2) badge = '<span class="clasificado-badge posible">posible 3°</span>';
     const tr = document.createElement('tr');
     tr.className = posClass;
-    tr.innerHTML = `
-      <td><span class="pos-rank ${rankClass}">${idx+1}</span> ${r.flag} ${r.nombre}${badge}</td>
-      <td>${r.pj}</td>
-      <td>${r.g}</td>
-      <td>${r.emp}</td>
-      <td>${r.p}</td>
-      <td>${r.gf}</td>
-      <td>${r.gc}</td>
-      <td class="pos-dg ${dgClass}">${r.pj > 0 ? dgStr : '—'}</td>
-      <td><span class="pos-pts">${r.pts}</span></td>
-    `;
+    tr.innerHTML =
+      '<td><span class="pos-rank ' + rankClass + '">' + (idx+1) + '</span> ' + r.flag + ' ' + r.nombre + badge + '</td>' +
+      '<td>' + r.pj + '</td>' +
+      '<td>' + r.g + '</td>' +
+      '<td>' + r.emp + '</td>' +
+      '<td>' + r.p + '</td>' +
+      '<td>' + r.gf + '</td>' +
+      '<td>' + r.gc + '</td>' +
+      '<td class="pos-dg ' + dgClass + '">' + (r.pj > 0 ? dgStr : '—') + '</td>' +
+      '<td><span class="pos-pts">' + r.pts + '</span></td>';
     body.appendChild(tr);
   });
 }
 
 function resetear() {
-  for (let i=1;i<=6;i++) {
-    document.getElementById('p'+i+'h').value = '';
-    document.getElementById('p'+i+'a').value = '';
+  for (let i = 1; i <= 6; i++) {
+    const h = document.getElementById('p'+i+'h');
+    const a = document.getElementById('p'+i+'a');
+    if (h) h.value = '';
+    if (a) a.value = '';
   }
-  document.getElementById('tabla-body').innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--texto-dim);padding:24px;font-size:13px;">Ingresá los marcadores de los partidos y presioná <strong>"Calcular"</strong> para ver la tabla.</td></tr>`;
+  document.getElementById('tabla-body').innerHTML =
+    '<tr><td colspan="9" style="text-align:center;color:var(--texto-dim);padding:24px;font-size:13px;">Ingresá los marcadores de los partidos y presioná <strong>"Calcular"</strong> para ver la tabla.</td></tr>';
 }
 
-// Calcular en tiempo real al escribir
-document.querySelectorAll('.score-input').forEach(inp => {
-  inp.addEventListener('input', calcular);
+// Adjuntar listeners al cargar el DOM
+document.addEventListener('DOMContentLoaded', function() {
+  for (let i = 1; i <= 6; i++) {
+    ['h','a'].forEach(function(lado) {
+      const el = document.getElementById('p'+i+lado);
+      if (el) {
+        el.addEventListener('input', calcular);
+        el.addEventListener('change', calcular);
+      }
+    });
+  }
 });
 </script>
 </body>
