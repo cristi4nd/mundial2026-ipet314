@@ -648,7 +648,7 @@ function findEq(eqs, id) {
   for (var i = 0; i < letras.length; i++) {
     var div = document.createElement('div');
     div.innerHTML = buildGrupo(letras[i]);
-    container.appendChild(div.firstChild);
+    if (div.firstElementChild) container.appendChild(div.firstElementChild);
   }
 })();
 
@@ -659,7 +659,8 @@ function mostrarGrupo(id, el) {
   var panel = document.getElementById('panel-' + id);
   if (panel) panel.classList.add('show');
   if (el) el.classList.add('active');
-  window.scrollTo(0, 0);
+  var nav = document.getElementById('gruposNav');
+  if (nav) nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function mostrarGrupoByLetter(letra) {
